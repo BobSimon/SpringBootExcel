@@ -17,8 +17,10 @@ import java.awt.Color;
 import java.net.URLEncoder;
 
 /**
- * Created by zouLu on 2017-12-14.
- */
+* 导出excel帮助类
+* @Author  Bob Simon
+* @Date 2018-01-11 12:04
+**/
 public class ExportExcelUtils {
     public static void exportExcel(HttpServletResponse response, String fileName, ExcelData data) throws Exception {
         // 告诉浏览器用什么软件可以打开此文件
@@ -45,6 +47,14 @@ public class ExportExcelUtils {
         }
     }
 
+    
+    /**
+    * 写入数据到excel
+    * 
+    * @param wb
+    * @param sheet
+    * @param data
+    */
     private static void writeExcel(XSSFWorkbook wb, Sheet sheet, ExcelData data) {
 
         int rowIndex = 0;
@@ -55,6 +65,14 @@ public class ExportExcelUtils {
 
     }
 
+    /**
+    * 把标题写入excel
+    *
+    * @param wb
+    * @param sheet
+    * @param titles
+    * @return
+    */
     private static int writeTitlesToExcel(XSSFWorkbook wb, Sheet sheet, List<String> titles) {
         int rowIndex = 0;
         int colIndex = 0;
@@ -72,7 +90,12 @@ public class ExportExcelUtils {
         titleStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
         titleStyle.setFont(titleFont);
         setBorder(titleStyle, BorderStyle.THIN, new XSSFColor(new Color(0, 0, 0)));
-
+        
+        /**
+          * 合并列
+          */
+        CellRangeAddress cellRangeAddress = new CellRangeAddress(rowIndex,rowIndex,1,3);
+        sheet.addMergedRegion(cellRangeAddress);
         Row titleRow = sheet.createRow(rowIndex);
         // titleRow.setHeightInPoints(25);
         colIndex = 0;
@@ -103,6 +126,12 @@ public class ExportExcelUtils {
         setBorder(dataStyle, BorderStyle.THIN, new XSSFColor(new Color(0, 0, 0)));
 
         for (List<Object> rowData : rows) {
+            
+            /**
+            * 合并列
+            */
+            CellRangeAddress cellRangeAddress = new CellRangeAddress(rowIndex,rowIndex,1,3);
+            sheet.addMergedRegion(cellRangeAddress);
             Row dataRow = sheet.createRow(rowIndex);
             // dataRow.setHeightInPoints(25);
             colIndex = 0;
