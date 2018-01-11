@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by zouLu on 2017-12-14.
- */
+* Excel数据实体类
+* @Author  Bob Simon
+* @Date 2018-01-11 12:01
+**/
 
 public class ExcelData implements Serializable {
 
